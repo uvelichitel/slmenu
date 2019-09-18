@@ -334,8 +334,11 @@ run(void) {
 			esc_switch_top:
 			switch(c) {
 				case CONTROL('['): /* ESC, need to press twice due to console limitations */
-				if(sel) openwith(text);
+				if(sel){
+				    strncpy(text, sel->text, sizeof text); /* Complete the input first, when hitting return */
+					openwith(text);
 					break;
+				}
 				case '[':
 					read(0, &c, 1);
 					switch(c) {
